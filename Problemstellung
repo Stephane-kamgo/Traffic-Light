@@ -1,0 +1,46 @@
+Die den Autos zugewandte Ampel wird durch die LEDs RED0, YELLOW0 und GREEN0 dargestellt, die
+Fußgängerampel durch die LEDs RED1 und GREEN1 (kein gelbes Licht). Durch das Drücken von BUTTON0
+können Fußgänger eine Umschaltung anfordern. Die LED BLUE1 signalisiert den Fußgängern, dass eine
+Umschaltanforderung entgegengenommen wurde.
+
+Die Steuerung soll im Detail wie folgt arbeiten:
+ Eine Umschaltanforderung wird durch Druck auf BUTTON0 ausgelöst. Der Druck der Taste wird
+durch Aktivierung der LED BLUE1 bestätigt (entspricht Signal kommt). Diese LED wird wieder
+deaktiviert, sobald die Fuÿgängerampel grünes Licht zeigt. Weitere Tastendrücke an BUTTON0 werden
+ignoriert, bis die Fußgängerampel wieder auf rot steht.
+
+ Nach erfolgter Umschaltanforderung im Normalzustand (Autoampel grün, Fußgängerampel rot),
+zählt die Ampel über die Siebensegmentanzeige acht Sekunden herunter, welche die Fußgänger
+noch warten müssen, bis ihre Ampel grün wird; in den übrigen Phasen bleibt die Siebensegmentanzeige aus. Von den insgesamt acht Sekunden bleibt die Autoampel noch fünf Sekunden grün, dann
+wechselt sie für eine Sekunde in den Zustand gelb, bevor sie schließlich rot wird. Erst nach weiteren
+zwei Sekunden, in denen beide Ampeln rot sind, schaltet die Fußgängerampel auf grün.
+
+ Die Grünphase der Fußgängerampel soll fünf Sekunden andauern, bevor sie zurück auf rot geschalten
+wird. Nach einer weiteren Sekunde wechselt die Autofahrerampel für eine Sekunde auf gelb-rot und
+nach einer weiteren Sekunde wieder auf grün in den Normalzustand.
+
+ Initial sollen beide Ampeln rot anzeigen und die Autoampel in der üblichen Geschwindigkeit über
+rot-gelb auf grün wechseln, während die Fußgängerampel auf rot verweilt (aber bereits Umschaltanforderungen annimmt).
+
+ Eine Umschaltanforderung kann angenommen werden, sobald die Fußgängerampel auf rot steht. Das
+bedeutet insbesondere, dass bereits Umschaltanforderungen angenommen werden können, bevor die
+Autoampel auf rot-gelb schaltet (d.h. beide Ampeln rot sind)  während die LED BLUE1 sofort
+die erfolgreiche Anforderung signalisiert, beginnt der Zähler (inklusive Anzeige der verbleibenden
+Wartezeit) jedoch erst nachdem die Autoampel auf grün steht.
+
+
+
+Die Ampel soll um einen Fehlerzustand (die Autoampel blinkt gelb, während die Fußgängerampel und
+Siebensegmentanzeige deaktiviert sind) erweitert werden. Als Fehlerindikator soll die externe Schnittstelle EXT verwendet werden. Da diese jedoch mit dem selben Pin wie BUTTON1 verbunden ist, kann die
+Fehlerschaltung vollständig mit diesem Taster getestet werden.
+ Während eines niedrigen Pegel (PD3 verbunden mit GND, was dem gedrückten BUTTON1 entspricht)
+soll der Fehlerzustand aktiviert werden.
+
+ Die Blinkperiode ist eine Sekunde. Zwischen An- und Ausschalten der Störanzeige soll die CPU wie
+üblich schlafen.
+
+ Der Fehlerzustand wird beendet, sobald wieder ein hoher Pegel anliegt. Um Unfälle zu vermeiden,
+soll die Ampelschaltung (wie beim Start der Anwendung) bei rot-rot beginnen und die Autoampel
+auf grün schalten.
+
+ Der Fall, dass beim Starten der Ampel bereits der Fehlermodus aktiviert ist, darf ignoriert werden.
